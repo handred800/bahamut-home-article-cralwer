@@ -15,8 +15,14 @@ const limiter = rateLimit({
 app.use(limiter)
 
 app.get("/", async (req, res) => {
-  const url = 'http://home.gamer.com.tw/creationCategory.php?owner=handred800&c=279252';
+  // creationCategory (查分類文章)
+  const collection = req.query.collection || 'creation';
+  // 使用者ID
+  const userId = req.query.owner || 'handred800';
+  // 分類ID
+  const catrgoryId = req.query.c || '279252';
 
+  const url = `http://home.gamer.com.tw/${collection}.php?owner=${userId}&c=${catrgoryId}`;
   const articles = await articleCrawler.getArtcles(url);
   
   res.header('Access-Control-Allow-Origin', '*');

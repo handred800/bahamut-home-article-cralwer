@@ -10,7 +10,7 @@ async function getArtcles(homeUrl, param) {
   // 遍歷 page
   let articleRequests = [];
   for (let i = 1; i <= pageNum; i++) {
-    const pageUrl = `http://home.gamer.com.tw/creationCategory.php?owner=handred800&c=279252&page=${i}`;
+    const pageUrl = `${homeUrl}&page=${i}`;
     articleRequests.push(getPageArticles(pageUrl));
   }
 
