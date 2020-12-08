@@ -15,7 +15,7 @@ const limiter = rateLimit({
 app.use(limiter)
 
 app.get("/", async (req, res) => {
-  const url = 'http://home.gamer.com.tw/creationCategory.php?owner=handred800&v=2&c=279252';
+  const url = 'http://home.gamer.com.tw/creationCategory.php?owner=handred800&c=279252';
 
   const articles = await articleCrawler.getArtcles(url);
   
