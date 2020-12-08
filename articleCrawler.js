@@ -1,5 +1,6 @@
 const request = require('request');
 const cheerio = require('cheerio');
+
 // 取得所有文章
 async function getArtcles(homeUrl, param) {
   const $ = await waitPageRequest(homeUrl);
@@ -33,6 +34,11 @@ async function getPageArticles(pageUrl) {
       url: `https://home.gamer.com.tw/${$(el).attr('href')}`
     });
   });
+
+  $('.HOME-mainbox2 img').each((i, el) => {
+    articlesInPage[i]['image'] = $(el).attr('src');
+  })
+  
   return articlesInPage;
 }
 
