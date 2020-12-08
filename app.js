@@ -1,46 +1,31 @@
-const request = require('request');
-const cheerio = require('cheerio');
+const express = require("express");
+const fs = require('fs');
+const rateLimit = require("express-rate-limit");
+const articleCrawler = require('./articleCrawler.js');
+const app = express();
+const port = process.env.PORT || 3000;
 
-const url = 'http://home.gamer.com.tw/creationCategory.php?owner=handred800&v=2&c=279252';
+app.set('trust proxy', 1);
 
-request(url, (err, res, body) => {
-	const $ = cheerio.load(body);
-  // 取得總頁數
-  const pageNum = $('.BH-pagebtnA a').length;
+const limiter = rateLimit({
+  windowMs: 1000,
+  max: 1, 
+})
 
-  let articleRequests = [];
+app.use(limiter)
 
-  for(let i = 1; i <= pageNum; i++){
-    const pageUrl = `http://home.gamer.com.tw/creationCategory.php?page=${i}&owner=handred800&v=2&c=279252`;
-    // article.push(`http://home.gamer.com.tw/creationCategory.php?page=${i}&owner=handred800&v=2&c=279252`);
-     articleRequests.push(getArticles(pageUrl));
-  }
-  Promise.all(articleRequests)
-    .then((res) => {
-      console.log(...res);
-    })
-});
+app.get("/", async (req, res) => {
+  const url = 'http://home.gamer.com.tw/creationCategory.php?owner=handred800&v=2&c=279252';
 
-// 遍歷 page 中所有的 article，並返回資訊
-async function getArticles(pageUrl) {
-  let articlesInPage = [];
-  const $ = await waitPageRequest(pageUrl);
-  $('.HOME-mainbox2a').each(function(i,el) {
-    articlesInPage.push({
-      title: $(el).text(),
-      url: `https://home.gamer.com.tw/${$(el).attr('href')}`
-    });
-  });
-  // console.log(articlesInPage);
-  return articlesInPage;
-}
+  const articles = await articleCrawler.getArtcles(url);
+  
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 
-// 等待 request 回來
-function waitPageRequest(url) {
-  return new Promise(function(resolve) {
-    request(url, (err, res, body) => {
-      const $ = cheerio.load(body);
-      resolve($);
-    })
+  return res.json({
+    success: true,
+    data: articles
   })
-}
+})
+
+app.listen(port);  
