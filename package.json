@@ -8,6 +8,7 @@
     "url": "https://github.com/handred800/bahamut-home-article-cralwer.git"
   },
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "handred800",
