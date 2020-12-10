@@ -45,8 +45,8 @@ async function getPageArticles(pageUrl) {
   $('.HOME-mainbox1 .ST1').each((i, el) => {
     const meta = $(el).text().split('│').slice(-3);
     articlesInPage[i]['meta'] = {
-      date: meta[0],
-      sponsor: parseInt(meta[1].split('：')[1]),
+      date: meta[0].split(' ')[0],
+      coin: parseInt(meta[1].split('：')[1]),
       view: parseInt(meta[2].split('：')[1])
     };
   })
