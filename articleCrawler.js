@@ -44,11 +44,13 @@ async function getPageArticles(pageUrl) {
   // 日期, 贊助, 人氣
   $('.HOME-mainbox1 .ST1').each((i, el) => {
     const meta = $(el).text().split('│').slice(-3);
+    console.log(meta[1].split('：'));
     articlesInPage[i]['meta'] = {
       date: meta[0].split(' ')[0],
-      coin: parseInt(meta[1].split('：')[1]),
-      view: parseInt(meta[2].split('：')[1])
+      coin: parseInt(meta[1].split('：')[1].replace(',', '')),
+      view: parseInt(meta[2].split('：')[1].replace(',', ''))
     };
+    
   })
   // GP
   $('.HOME-mainbox1 .ST3').each((i, el) => {
