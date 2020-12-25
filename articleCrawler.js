@@ -29,9 +29,12 @@ async function getPageArticles(pageUrl) {
   const $ = await waitPageRequest(pageUrl);
   // 抓文章標題和 href
   $('.TS1').each((i, el) => {
+    const href = $(el).attr('href');
+    const id = href.match(/(\d+)/)[0];
     articlesInPage.push({
+      id,
       title: $(el).text(),
-      url: `https://home.gamer.com.tw/${$(el).attr('href')}`
+      url: `https://home.gamer.com.tw/${href}`
     });
   });
 
@@ -44,7 +47,6 @@ async function getPageArticles(pageUrl) {
   // 日期, 贊助, 人氣
   $('.HOME-mainbox1 .ST1').each((i, el) => {
     const meta = $(el).text().split('│').slice(-3);
-    console.log(meta[1].split('：'));
     articlesInPage[i]['meta'] = {
       date: meta[0].split(' ')[0],
       coin: parseInt(meta[1].split('：')[1].replace(',', '')),
