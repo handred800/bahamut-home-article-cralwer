@@ -18,7 +18,7 @@ app.get("/", async (req, res) => {
   // creationCategory (查分類文章)
   const collection = req.query.collection || 'creation';
   // 使用者ID
-  const userId = req.query.owner || 'handred800';
+  const userId = req.query.owner || 'handred2100';
   // 分類ID
   const catrgoryId = req.query.c || '279252';
 
@@ -28,10 +28,18 @@ app.get("/", async (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 
-  return res.json({
-    success: true,
-    data: articles
-  })
+  if(articles.length === 0) {
+    return res.json({
+      success: false,
+      data: {message: '查無使用者或是此使用者無創作'}
+    })
+  } else {
+    return res.json({
+      success: true,
+      data: articles
+    })
+  }
+
 })
 
 app.listen(port);  
