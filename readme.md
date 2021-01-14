@@ -2,7 +2,7 @@
 node.js 做的簡單爬蟲
 
 ## 👌使用方式
-在應用網址(https://bahamut-home-article-cralwer.herokuapp.com/)加上參數來獲取特定文章資料  
+在應用網址：https://bahamut-home-article-cralwer.herokuapp.com/，加上參數來獲取特定文章資料  
 例如: https://bahamut-home-article-cralwer.herokuapp.com/?owner=handred800  
 *設定隱藏的文章爬蟲讀不到喔*  
 
