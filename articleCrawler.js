@@ -4,8 +4,11 @@ const cheerio = require('cheerio');
 // 取得所有文章
 async function getArtcles(homeUrl, param) {
   const $ = await waitPageRequest(homeUrl);
+  // 獲取上限
+  const pageLimit = 100;
+
   // 取得總頁數
-  const pageNum = parseInt($('.BH-pagebtnA a:last-child').text());
+  let pageNum = Math.min(parseInt($('.BH-pagebtnA a:last-child').text()), pageLimit);
 
   // 遍歷 page
   let articleRequests = [];

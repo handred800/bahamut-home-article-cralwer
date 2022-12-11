@@ -1,9 +1,7 @@
 # 巴哈小屋文章 API
 node.js 做的簡單爬蟲
 
-## 👌使用方式
-在應用網址：https://bahamut-home-article-cralwer.herokuapp.com/，加上參數來獲取特定文章資料  
-例如: https://bahamut-home-article-cralwer.herokuapp.com/?owner=handred800  
+## 👌注意事項
 *設定隱藏的文章爬蟲讀不到喔*  
 
 ### 參數
@@ -14,9 +12,6 @@ node.js 做的簡單爬蟲
 | collection  | .php的名稱(?前面那一段) | 預設為creation  有用到c的話要使用creationCategory |
 
 只有owner的話是取用所有的文章，c和collection要搭配使用  
-  
-例如: 我要取 [handred800 的獨立遊戲特輯的文章](https://home.gamer.com.tw/creationCategory.php?owner=handred800&c=433900)  
-API網址就是 https://bahamut-home-article-cralwer.herokuapp.com/?collection=creationCategory&owner=handred800&c=433900  
 
 ## 🗄資料結構
 資料排序按照實際頁面排序(置頂優先級高於張貼時間)  

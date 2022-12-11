@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
+    "puppeteer": "^19.4.0",
     "request": "^2.88.2"
   }
 }
