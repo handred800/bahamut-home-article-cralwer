@@ -30,8 +30,8 @@ const getArtcles = async (userId) => {
       list = await page.$eval('body', getPageArticlesOld);
     } else {
       console.log('this is New');
-      await page.waitForSelector('.detailed-mode-box');
-      list = await page.evaluate(getPageArticles)
+      await page.screenshot({path: 'screen.jpg'})
+      list = await page.$eval('.platform-info-box', getPageArticles);
     }
     articles = articles.concat(list);
   }
@@ -82,37 +82,37 @@ function getPageArticlesOld() {
 // 新版
 function getPageArticles() {
   const articlesInPage = [];
-  // 抓文章標題和 href
-  document.querySelectorAll('.info-title a').forEach(($el) => {
-    const href = $el.getAttribute('href');
-    const id = href.match(/(\d+)/)[0];
-    articlesInPage.push({
-      id,
-      title: $el.innerText,
-      url: `https://home.gamer.com.tw/${href}`
-    });
-  })
 
-  document.querySelectorAll('.platform-img a').forEach(($el, i) => {
-    articlesInPage[i]['image'] = $el.getAttribute('src');
-  })
+  console.log(document.querySelectorAll('.info-title a'));
+  // // 抓文章標題和 href
+  // document.querySelectorAll('.info-title a').forEach(($el) => {
+  //   const href = $el.getAttribute('href');
+  //   const id = href.match(/(\d+)/)[0];
+  //   articlesInPage.push({
+  //     id,
+  //     title: $el.innerText,
+  //     url: `https://home.gamer.com.tw/${href}`
+  //   });
+  // })
 
-  // // 抓 meta
-  // // 日期, 贊助, 人氣
-  document.querySelectorAll('.caption-text:not(.height-limit-2)').forEach(($el, i) => {
-    const meta = $el.innerText.split('│').slice(-3);
-    articlesInPage[i]['meta'] = {
-      date: meta[0].split(' ')[0],
-      coin: parseInt(meta[1].split('：')[1].replace(',', '')),
-      view: parseInt(meta[2].split('：')[1].replace(',', ''))
-    };
-  })
-  // // GP
-  document.querySelectorAll('.gp-text').forEach(($el, i) => {
-    articlesInPage[i]['meta']['gp'] = parseInt($el.innerText.split(' ')[0])
-  })
+  // document.querySelectorAll('.platform-img a').forEach(($el, i) => {
+  //   articlesInPage[i]['image'] = $el.getAttribute('src');
+  // })
 
-
+  // // // 抓 meta
+  // // // 日期, 贊助, 人氣
+  // document.querySelectorAll('.caption-text:not(.height-limit-2)').forEach(($el, i) => {
+  //   const meta = $el.innerText.split('│').slice(-3);
+  //   articlesInPage[i]['meta'] = {
+  //     date: meta[0].split(' ')[0],
+  //     coin: parseInt(meta[1].split('：')[1].replace(',', '')),
+  //     view: parseInt(meta[2].split('：')[1].replace(',', ''))
+  //   };
+  // })
+  // // // GP
+  // document.querySelectorAll('.gp-text').forEach(($el, i) => {
+  //   articlesInPage[i]['meta']['gp'] = parseInt($el.innerText.split(' ')[0])
+  // })
 
   return articlesInPage;
 }
