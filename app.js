@@ -1,7 +1,6 @@
 const express = require("express");
-const fs = require('fs');
 const rateLimit = require("express-rate-limit");
-const { getArtcles } = require('./newCrawler.js');
+const { getArtcles } = require('./articleCrawler.js');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,7 +17,21 @@ app.get("/", async (req, res) => {
   // 使用者ID
   const userId = req.query.owner;
 
-  const articles = await getArtcles(userId);
+  if(!userId) {
+    return res.json({
+      success: false,
+      data: {message: '缺少 user ID'}
+    })
+  }
+
+  const articles = [];
+
+  try {
+    articles = await getArtcles(userId)
+  } catch (error) {
+    console.log(userId);
+    console.log(error);
+  }
   
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET');

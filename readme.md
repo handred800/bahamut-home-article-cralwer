@@ -8,8 +8,6 @@ node.js 做的簡單爬蟲
 | API參數     | 對應巴哈小屋網址        | 備註                                             |
 |-------------|-------------------------|--------------------------------------------------|
 | owner(必填) | owner                   | 巴哈ID(帳號)                                     |
-| c           | c                       | 分類ID(資料夾)  搭配參數collection使用            |
-| collection  | .php的名稱(?前面那一段) | 預設為creation  有用到c的話要使用creationCategory |
 
 只有owner的話是取用所有的文章，c和collection要搭配使用  
 
