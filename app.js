@@ -24,7 +24,7 @@ app.get("/", async (req, res) => {
     })
   }
 
-  const articles = [];
+  let articles = [];
 
   try {
     articles = await getArtcles(userId)

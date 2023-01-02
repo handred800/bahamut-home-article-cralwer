@@ -12,7 +12,7 @@ const getArtcles = async (userId) => {
     `https://home.gamer.com.tw/profile/index_creation.php?owner=${userId}&page=`;
 
   // 獲取上限
-  const pageLimit = 10;
+  const pageLimit = 15;
   // 取得總頁數
   const pageTotal = await page.$eval('.BH-pagebtnA a:last-child', $el => parseInt($el.innerText));
   const pageNum = Math.min(pageTotal, pageLimit)
@@ -23,6 +23,6 @@ const getArtcles = async (userId) => {
   let datas = await Promise.all(tasks);
   browser.close();
 
-  return [...datas];
+  return datas.flat();
 }
 module.exports = { getArtcles };
