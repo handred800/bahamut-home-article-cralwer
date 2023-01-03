@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const { scraperForNew, scraperForOld } = require('./scrapers');
 
-const getArtcles = async (userId) => {
+const getArtcles = async (userId, limit) => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   await page.goto(`https://home.gamer.com.tw/profile/index_creation.php?owner=${userId}`);
@@ -12,7 +12,7 @@ const getArtcles = async (userId) => {
     `https://home.gamer.com.tw/profile/index_creation.php?owner=${userId}&page=`;
 
   // 獲取上限
-  const pageLimit = 15;
+  const pageLimit = limit || 15;
   // 取得總頁數
   const pageTotal = await page.$eval('.BH-pagebtnA a:last-child', $el => parseInt($el.innerText));
   const pageNum = Math.min(pageTotal, pageLimit)

@@ -15,7 +15,7 @@ app.use(limiter)
 
 app.get("/", async (req, res) => {
   // 使用者ID
-  const userId = req.query.owner;
+  const { owner: userId, l: limit } = req.query;
 
   if(!userId) {
     return res.json({
@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
   let articles = [];
 
   try {
-    articles = await getArtcles(userId)
+    articles = await getArtcles(userId, limit);
   } catch (error) {
     console.log(userId);
     console.log(error);
