@@ -8,7 +8,7 @@ const responseGenerator = require('./responseGenerator.js');
 const port = process.env.PORT || 3000;
 const limiter = rateLimit({
 	windowMs: 1000,
-	max: 1, // 每 windowMs 最大請求數
+	max: 3, // 每 windowMs 最大請求數
 })
 
 const app = express();
